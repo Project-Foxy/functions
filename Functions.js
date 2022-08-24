@@ -191,6 +191,8 @@ function setup({
     extra_funcs = true,
     show_mouse_position = false,
     autoObj = true,
+    show_canvas_border = false,
+    pause_button = false,
 } = {},_func = ()=>{}) {
     
     if(autoObj){
@@ -253,20 +255,50 @@ function setup({
     requestAnimationFrame(eval(func))
 
     if(show_mouse_position){
+        obj.clone("setup:show_mouse_div","div")
         forever(()=>{
-            pen.clear()
-            pen.style.text = "mouse_X: " + floor(mouse_X) + enter + "mouse_Y: " + floor(mouse_Y)
-            pen.style.textSize = 30
-            pen.style.width = 200
-            pen.style.height = 70
-            pen.style.color = invisible
-            pen.x = mouse_X + 120
-            pen.y = mouse_Y + 40
-            pen.rectangle()
+            obj.style.reset()
+            obj.style.textSize = 30
+            obj.style.width = 200
+            obj.style.height = 70
+            obj.style.color = invisible
+            obj.append("setup:show_mouse_div")
+            obj.style.y = mouse_Y + 70
+            obj.style.x = mouse_X
+            obj.style.text = "mouse_X: " + floor(mouse_X) + enter + "mouse_Y: " + floor(mouse_Y)
+            obj.update("setup:show_mouse_div")
+        })
+    }
+    if(show_canvas_border){
+        obj.clone("setup:show_canvas_border_div","div")
+        obj.append("setup:show_canvas_border_div")
+        forever(()=>{
+            obj.style.reset()
+            obj.style.y = 500
+            obj.style.x = 500
+            obj.style.width = 900
+            obj.style.height = 900
+            obj.style.color = invisible
+            obj.style.borderSize = 50
+            obj.update("setup:show_canvas_border_div")
+        })
+    }
+    if(pause_button) {
+        obj.save("setup:pause_button_div","https://stiostudio.github.io/resurser/bilder/Epple.gif")
+        obj.img.load("setup:pause_button_div")
+        obj.style.reset()
+        obj.style.y = 0
+        obj.style.x = 1000
+        obj.style.width = 100
+        obj.style.height = 100
+        obj.style.color = invisible
+        obj.update("setup:pause_button_div")
+        obj.append("setup:pause_button_div")
+        obj.get("setup:pause_button_div").onclick = (()=>{
+            say("hi")
         })
     }
 }
-
 
 
 /** @default
@@ -553,7 +585,7 @@ function sin(element) {
     return(Math.sin(6.28 / 360 * element))
 }
 
-let invisible = rgb(255, 255, 255, 255)
+let invisible = rgb(255, 255, 255, 0)
 
 /** @default
  * Math
@@ -736,7 +768,7 @@ let obj = {
         }
         naf.obj.push(rem)
     },
-    rename(objName, NEWobjname){
+    rename(NEWobjname,objName){
         naf.objName[naf.indexOf(objName)] = NEWobjname
     },
     getWithNum(num){
@@ -807,7 +839,7 @@ let obj = {
         
         height: 100,
         
-        radius: "0%",
+        radius: "0",
         
         borderSize: 0,
         
@@ -822,6 +854,22 @@ let obj = {
         rotation: 0,
         x: 0,
         y: 0,
+        reset(){
+            this.color = "#ff0000"
+            this.position = "absolute"
+            this.width = 100
+            this.height = 100
+            this.radius = "0"
+            this.borderSize = 0
+            this.borderColor = "#000000"
+            this.text = ""
+            this.textType = "none"
+            this.textSize = 50
+            this.rotation = 0
+            this.x = 0
+            this.y = 0
+
+        }
     },
     append(objName,clone=false,deep=true){
         let rem = naf.obj[naf.objName.indexOf(objName)];
