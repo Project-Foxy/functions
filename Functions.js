@@ -284,23 +284,35 @@ function setup({
         })
     }
     if(pause_button) {
-        obj.save("setup:pause_button_div","https://stiostudio.github.io/resurser/bilder/Epple.gif")
+        obj.save("setup:pause_button_div","/StioStudio.github.io/resurser/bilder/pause_a.png")
         obj.img.load("setup:pause_button_div")
         obj.style.reset()
-        obj.style.y = 0
-        obj.style.x = 1000
+        obj.style.y = 100
+        obj.style.x = 900
         obj.style.width = 100
         obj.style.height = 100
         obj.style.color = invisible
         obj.update("setup:pause_button_div")
         obj.append("setup:pause_button_div")
         obj.get("setup:pause_button_div").onclick = (()=>{
-            say("hi")
+            say("pause")
+            debugger
         })
     }
 }
 
-
+function elementsOverlap(el1, el2) {
+    const domRect1 = el1.getBoundingClientRect();
+    const domRect2 = el2.getBoundingClientRect();
+  
+    return !(
+      domRect1.top > domRect2.bottom ||
+      domRect1.right < domRect2.left ||
+      domRect1.bottom < domRect2.top ||
+      domRect1.left > domRect2.right
+    );
+}
+    
 /** @default
  * console.log("text")
  */

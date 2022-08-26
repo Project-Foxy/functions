@@ -1,0 +1,3 @@
+
+void say(char* message);
+
