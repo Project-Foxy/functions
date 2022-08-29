@@ -11,7 +11,7 @@
 ---
 
 
- **C++**
+**C++**
 
 -  Just include the `Functions.h` header, like this: 
 ```c++
