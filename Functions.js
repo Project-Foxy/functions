@@ -197,14 +197,15 @@ function setup({
     
     if(autoObj){
         //
-        obj.save("div",createElement("div"));
+        obj.save("div",document.createElement("div"));
         //
-        obj.save("img",createElement("img"));
+        obj.save("img",document.createElement("img"));
         //
-        obj.save("audio",createElement("audio"))
+        obj.save("audio",document.createElement("audio"))
         //
-        obj.save("canvas",createElement("canvas"));
+        obj.save("canvas",document.createElement("canvas"));
         //
+        
     }
 
     if(autoCSS == "purple") {
@@ -301,17 +302,247 @@ function setup({
     }
 }
 
+let obj = {
+    open(objName){
+        let rem = naf.obj[naf.objName.indexOf(objName)]
+        open(rem)
+    },
+    save(objName, obj){
+        if(naf.objName.includes(objName)){
+            let rem = naf.objName.indexOf(objName)
+            naf.objName[rem] = objName
+            naf.obj[rem] = obj
+        }
+        else{
+            naf.objName.push(objName)
+            naf.obj.push(obj)
+        }
+    },
+    clone(NEWobjname, objName){
+        let rem = naf.obj[naf.objName.indexOf(objName)]
+        naf.objName.push(NEWobjname)
+        if(rem instanceof Element){
+            rem = rem.cloneNode(true)
+        }
+        naf.obj.push(rem)
+    },
+    rename(NEWobjname,objName){
+        naf.objName[naf.indexOf(objName)] = NEWobjname
+    },
+    getWithNum(num){
+        if(naf.objName[num] == undefined){
+            return(undefined)
+        }
+        return(naf.obj[num])
+    },
+    get(objName){
+        if(naf.objName.includes(objName)){
+            return(naf.obj[naf.objName.indexOf(objName)])
+        }
+        return(undefined)
+    },
+    getClone(objName,deep=true){
+        let rem = naf.obj[naf.objName.indexOf(objName)]
+        if(!(rem instanceof Element)){
+            console.error("You can only clone elements")
+            return
+        }
+        if(naf.objName.includes(objName)){
+            return(rem.cloneNode(deep))
+        }
+        return(undefined)
+    },
+    id: "none",
+    class: [],
+    deleteClass(_className){
+        this.class[this.class.indexOf(_className)] = ""
+    },
+    addClass(_className){
+        this.class.push(_className)
+    },
+    line:{
+        append(objName){
+            let rem = naf.objName.indexOf(objName)
+            let rem_a = naf.obj[rem];
+            let rem_b = document.createElement("svg")
+            let rem_c
+            let rem_d
+            
+            rem_c = rem_a.attributes[1].value
+            rem_d = rem_a.attributes[3].value
+            if(rem_c>=rem_d){
+                rem_b.setAttribute("height", rem_c)
+            }
+            else{
+                rem_b.setAttribute("height", rem_d)
+            }
+
+            rem_c = rem_a.attributes[0].value
+            rem_d = rem_a.attributes[2].value
+            if(rem_c>=rem_d){
+                rem_b.setAttribute("width", rem_c)            }
+            else{
+                rem_b.setAttribute("width", rem_d)
+            }
+            
+
+            say(rem_b.attributes)
+            
+            rem_b.append(rem_a)
+            append(rem_b)
+        },
+        reset(){
+            this.width = "1"
+            this.height = "1"
+            this.x1 = 0
+            this.y1 = 0
+            this.x2 = 0
+            this.y2 = 0
+            this.color = rgb(255,0,0)
+        },
+        width: "1",
+        height: "1",
+        x1:0,
+        y1:0,
+        x2:0,
+        y2:0,
+        color: rgb(255,0,0),
+        lineCap: "round",
+        update(objName){
+            
+            let rem = naf.obj[naf.objName.indexOf(objName)]
+            /**
+             let rem = document.createElement("line")
+             */
+            let rs = rem.style
+            if(!(rem instanceof Element)){
+                console.error("You can only style elements")
+                return
+            }
+            rs.stroke = this.color
+            rs.strokeWidth = this.width
+            rs.lineCap = this.lineCap
+            rem.setAttribute("x1", this.x1)
+            rem.setAttribute("y1", this.y1)
+            rem.setAttribute("x2", this.x2)
+            rem.setAttribute("y2", this.y2)
+        }
+    },
+    style:{
+        update(objName, autoCSS=true){
+            let rem = naf.obj[naf.objName.indexOf(objName)];
+            if(rem instanceof Element){
+                //let rem = document.createElement("div")
+                let SP
+                if(autoCSS){
+                    SP = smallestHW()/1000
+                }
+                else{
+                    SP = 1
+                }
+                let rs = rem.style
+                rem.id = this.id
+                rem.classList.add("obj")
+                repeat(obj.class.length,()=>{
+                    rem.classList.add(this.class.pop());
+                })
+                rs.backgroundColor = this.color
+                rs.position = this.position
+                rs.width = `${this.width*SP}px`
+                rs.height = `${this.height*SP}px`
+                rs.borderRadius = `${this.radius}`
+                rs.border = `${this.borderSize*SP}px solid ${this.borderColor}`
+                rem.innerText = this.text
+                rs.font = this.textType
+                rs.fontSize = `${this.textSize*SP}px`
+                rs.transform = `rotate(${this.rotation}deg)`
+                rs.left = `${this.x*SP - (this.width*SP / 2 + (this.borderSize*SP))}px`
+                rs.top = `${this.y*SP - (this.height*SP / 2 + (this.borderSize*SP))}px`
+                
+                return
+            }
+            console.error("You can only style elements")
+        },
+        color: "#ff0000",
+        position: "absolute",
+        
+        width: 100,
+        
+        height: 100,
+        
+        radius: "0",
+        
+        borderSize: 0,
+        
+        borderColor: "#000000",
+        
+        text: "",
+        
+        textType: "none",
+        
+        textSize: 50,
+                
+        rotation: 0,
+        x: 0,
+        y: 0,
+        reset(){
+            this.color = "#ff0000"
+            this.position = "absolute"
+            this.width = 100
+            this.height = 100
+            this.radius = "0"
+            this.borderSize = 0
+            this.borderColor = "#000000"
+            this.text = ""
+            this.textType = "none"
+            this.textSize = 50
+            this.rotation = 0
+            this.x = 0
+            this.y = 0
+
+        }
+    },
+    append(objName,clone=false,deep=true){
+        let rem = naf.obj[naf.objName.indexOf(objName)];
+        if(clone){
+            rem = rem.cloneNode(deep)
+        }
+        getElementById("all").append(rem)
+    },
+    img:{
+        load(objName){
+            let rem = naf.objName.indexOf(objName)
+            naf.obj[rem] = LoadImage(naf.obj[rem])
+        }
+    },
+    snd:{
+        load(objName){
+            let rem = naf.objName.indexOf(objName)
+            naf.obj[rem] = LoadSound(naf.obj[rem])
+        },
+        play(objName, {loop = false} = {}){
+            //let snd = document.createElement("audio")
+            let snd = naf.obj[naf.objName.indexOf(objName)]
+            snd.loop = loop != null ? loop : false;
+            snd.play()
+        },
+        pause(objName){
+            naf.obj[naf.objName.indexOf(objName)].pause()
+        },
+    }
+}
+
 function elementsOverlap(el1, el2) {
     const domRect1 = el1.getBoundingClientRect();
     const domRect2 = el2.getBoundingClientRect();
-  
+    
     return !(
-      domRect1.top > domRect2.bottom ||
-      domRect1.right < domRect2.left ||
-      domRect1.bottom < domRect2.top ||
-      domRect1.left > domRect2.right
-    );
-}
+        domRect1.top > domRect2.bottom ||
+        domRect1.right < domRect2.left ||
+        domRect1.bottom < domRect2.top ||
+        domRect1.left > domRect2.right
+        );
+    }
     
 /** @default
  * console.log("text")
@@ -756,162 +987,6 @@ function cutLink(_link) {
     return(rem)
 }
 
-let obj = {
-    open(objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
-        open(rem)
-    },
-    save(objName, obj){
-        if(naf.objName.includes(objName)){
-            let rem = naf.objName.indexOf(objName)
-            naf.objName[rem] = objName
-            naf.obj[rem] = obj
-        }
-        else{
-            naf.objName.push(objName)
-            naf.obj.push(obj)
-        }
-    },
-    clone(NEWobjname, objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
-        naf.objName.push(NEWobjname)
-        if(rem instanceof Element){
-            rem = rem.cloneNode(true)
-        }
-        naf.obj.push(rem)
-    },
-    rename(NEWobjname,objName){
-        naf.objName[naf.indexOf(objName)] = NEWobjname
-    },
-    getWithNum(num){
-        if(naf.objName[num] == undefined){
-            return(undefined)
-        }
-        return(naf.obj[num])
-    },
-    get(objName){
-        if(naf.objName.includes(objName)){
-            return(naf.obj[naf.objName.indexOf(objName)])
-        }
-        return(undefined)
-    },
-    getClone(objName,deep=true){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
-        if(!(rem instanceof Element)){
-            console.error("You can only clone elements")
-            return
-        }
-        if(naf.objName.includes(objName)){
-            return(rem.cloneNode(deep))
-        }
-        return(undefined)
-    },
-    update(objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)];
-        if(rem instanceof Element){
-            //let rem = document.createElement("div")
-            let SP = smallestHW()/1000
-            let rem_s = rem.style
-            let ts = this.style
-            rem.id = this.id
-            rem.classList.add("obj")
-            repeat(this.class.length,()=>{
-                rem.classList.add(this.class.pop());
-            })
-            rem_s.backgroundColor = ts.color
-            rem_s.position = ts.position
-            rem_s.width = `${ts.width*SP}px`
-            rem_s.height = `${ts.height*SP}px`
-            rem_s.borderRadius = `${ts.radius}px`
-            rem_s.border = `${ts.borderSize*SP}px solid ${ts.borderColor}`
-            rem.innerText = ts.text
-            rem_s.font = ts.textType
-            rem_s.fontSize = `${ts.textSize*SP}px`
-            rem_s.transform = `rotate(${ts.rotation}deg)`
-            rem_s.left = `${ts.x*SP - (this.style.width*SP / 2 + (this.style.borderSize*SP))}px`
-            rem_s.top = `${ts.y*SP - (this.style.height*SP / 2 + (this.style.borderSize*SP))}px`
-            
-            return
-        }
-        console.error("You can only style elements")
-    },
-    id: "none",
-    class: [],
-    deleteClass(_className){
-        this.class[this.class.indexOf(_className)] = ""
-    },
-    addClass(_className){
-        this.class.push(_className)
-    },
-    style:{
-        color: "#ff0000",
-        position: "absolute",
-        
-        width: 100,
-        
-        height: 100,
-        
-        radius: "0",
-        
-        borderSize: 0,
-        
-        borderColor: "#000000",
-        
-        text: "",
-        
-        textType: "none",
-        
-        textSize: 50,
-                
-        rotation: 0,
-        x: 0,
-        y: 0,
-        reset(){
-            this.color = "#ff0000"
-            this.position = "absolute"
-            this.width = 100
-            this.height = 100
-            this.radius = "0"
-            this.borderSize = 0
-            this.borderColor = "#000000"
-            this.text = ""
-            this.textType = "none"
-            this.textSize = 50
-            this.rotation = 0
-            this.x = 0
-            this.y = 0
-
-        }
-    },
-    append(objName,clone=false,deep=true){
-        let rem = naf.obj[naf.objName.indexOf(objName)];
-        if(clone){
-            rem = rem.cloneNode(deep)
-        }
-        getElementById("all").append(rem)
-    },
-    img:{
-        load(objName){
-            let rem = naf.objName.indexOf(objName)
-            naf.obj[rem] = LoadImage(naf.obj[rem])
-        }
-    },
-    snd:{
-        load(objName){
-            let rem = naf.objName.indexOf(objName)
-            naf.obj[rem] = LoadSound(naf.obj[rem])
-        },
-        play(objName, {loop = false} = {}){
-            //let snd = document.createElement("audio")
-            let snd = naf.obj[naf.objName.indexOf(objName)]
-            snd.loop = loop != null ? loop : false;
-            snd.play()
-        },
-        pause(objName){
-            naf.obj[naf.objName.indexOf(objName)].pause()
-        },
-    }
-}
 
 let img = {
     save(_imgName, _imgUrl){
@@ -959,7 +1034,9 @@ function createElement(_element){
 function appendChild(_element){
     document.getElementById("all").appendChild(_element)
 }
-
+function append(_element){
+    document.getElementById("all").append(_element)
+}
 let eventer = {
     listen(_name_, _func){
         let code = {
