@@ -3,7 +3,14 @@
 
 int main()
 {
-    say("hello", "\nhello");
+    repeat(10, []() {
+    
+        say("hello");
+    
+    });
+    
+    stop();
+    
 
     return 0;
 }
