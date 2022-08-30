@@ -1,16 +1,16 @@
 #include <iostream>
 #include "Functions.h"
+#include <unistd.h>
 
 int main()
 {
-    repeat(10, []() {
+    forever([]() {
     
         say("hello");
-    
+        
     });
-    
+
     stop();
-    
 
     return 0;
 }

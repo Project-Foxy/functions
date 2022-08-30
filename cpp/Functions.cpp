@@ -1,6 +1,5 @@
 #include "Functions.h"
 
-
 void say(char* message...)
 {
     std::cout << message << std::endl;
@@ -17,3 +16,9 @@ void repeat(int times,std::function<void()> func) {
     }
 }
 
+void forever(std::function<void()> func, int fps){
+    while(true){
+        func();
+        sleep(1/fps);
+    }
+}
