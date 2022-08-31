@@ -15,7 +15,7 @@
 
 -  Just include the `Functions.h` header, like this: 
 ```c++
-#include "./path/to/Functions.h"
+#include "./path/to/cpp/Functions.h"
 ```
 - And thats really it, C++ will import the rest, but remember to compile Functions.cpp, the file that is included with the similar named header.
 
