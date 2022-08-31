@@ -3,10 +3,13 @@
 
 int main()
 {
-    repeat(10, []() {
-    
+    int i = 0;
+    repeat(10, [=]() {
+        
+        say("Times repeat: ");
+        say(i);
         say("hello");
-    
+        
     });
     
     stop();
