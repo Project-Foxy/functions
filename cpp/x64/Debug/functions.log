@@ -1,2 +1,31 @@
-﻿  main.cpp
-  functions.vcxproj -> C:\Users\espen\Desktop\coding\functions\cpp\x64\Debug\functions.exe
+﻿  Functions.cpp
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(14,29): error C2039: 'function': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\iostream(19): message : see declaration of 'std'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(14,37): error C2061: syntax error: identifier 'function'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(16,19): error C2039: 'function': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\iostream(19): message : see declaration of 'std'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(16,27): error C2065: 'function': undeclared identifier
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(16,36): error C2065: 'func': undeclared identifier
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(16,42): error C2062: type 'int' unexpected
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(12,28): error C2039: 'function': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\iostream(19): message : see declaration of 'std'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(12,36): error C2061: syntax error: identifier 'function'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(15,9): error C3861: 'func': identifier not found
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(19,19): error C2039: 'function': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\iostream(19): message : see declaration of 'std'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(19,27): error C2065: 'function': undeclared identifier
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(19,36): error C2065: 'func': undeclared identifier
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(19,42): error C2062: type 'int' unexpected
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(19,50): error C2143: syntax error: missing ';' before '{'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.cpp(19,50): error C2447: '{': missing function header (old-style formal list?)
+  main.cpp
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(14,29): error C2039: 'function': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\iostream(19): message : see declaration of 'std'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(14,37): error C2061: syntax error: identifier 'function'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(16,19): error C2039: 'function': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\iostream(19): message : see declaration of 'std'
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(16,27): error C2065: 'function': undeclared identifier
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(16,36): error C2065: 'func': undeclared identifier
+C:\Users\espen\Desktop\coding\functions\cpp\Functions.h(16,42): error C2062: type 'int' unexpected
+C:\Users\espen\Desktop\coding\functions\cpp\main.cpp(7,5): error C3861: 'forever': identifier not found
+  Generating Code...

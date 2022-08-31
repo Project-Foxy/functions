@@ -195,6 +195,8 @@ function setup({
     pause_button = false,
 } = {},_func = ()=>{}) {
     
+    
+
     if(autoObj){
         //
         obj.save("div",document.createElement("div"));

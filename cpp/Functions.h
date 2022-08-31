@@ -1,16 +1,16 @@
 #pragma once
 #include <iostream>
-#include <functional>
 
-void say(const char* message);
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
-void say(int message);
-
-void say(double message);
+void say(char* message...);
 
 void stop();
 
 void repeat(int times, std::function<void()> func);
 
-void repeat(int times, std::function<void(int)> func);
-
+void forever(std::function<void()> func, int fps = 60);

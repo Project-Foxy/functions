@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Functions.h"
 
+
 int main()
 {
     int i = 0;
@@ -9,11 +10,10 @@ int main()
         say("Times repeat: ");
         say(i);
         say("hello");
-        
+            
     });
-    
+
     stop();
-    
 
     return 0;
 }
