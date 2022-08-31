@@ -259,7 +259,7 @@ function setup({
     }
 
     if(say_code){
-        say(_func)
+        say(func)
     }
     
     requestAnimationFrame(eval(func))
