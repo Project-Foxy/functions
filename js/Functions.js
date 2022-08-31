@@ -193,9 +193,12 @@ function setup({
     autoObj = true,
     show_canvas_border = false,
     pause_button = false,
+    say_code = false,
 } = {},_func = ()=>{}) {
     
-    
+    if(say_code){
+        say(_func)
+    }
 
     if(autoObj){
         //
@@ -253,6 +256,10 @@ function setup({
     
     if(extra_funcs){
         func = naf.makeAll(func)
+    }
+
+    if(say_code){
+        say(_func)
     }
     
     requestAnimationFrame(eval(func))
