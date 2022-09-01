@@ -312,6 +312,10 @@ function setup({
 }
 
 let obj = {
+    say(objName){
+        let rem = naf.obj[naf.objName.indexOf(objName)]
+        say(rem)
+    },
     open(objName){
         let rem = naf.obj[naf.objName.indexOf(objName)]
         open(rem)
