@@ -30,7 +30,7 @@ let naf = {
     makeDivId(_id){
         let div = document.createElement("div")
         div.id = _id
-        document.getElementById("all").appendChild(div)
+        document.querySelector("html").appendChild(div)
     },
     
     coseineY: 0,
@@ -214,20 +214,20 @@ function setup({
     }
 
     if(autoCSS == "purple") {
-        getElementById("all").style.backgroundColor = rgb(138,60,138)
-        getElementById("all").style.color = rgb(255,255,255)
+        document.querySelector("html").style.backgroundColor = rgb(138,60,138)
+        document.querySelector("html").style.color = rgb(255,255,255)
     }
     if(autoCSS == "darkMode") {
-        getElementById("all").style.backgroundColor = rgb(0,0,0)
-        getElementById("all").style.color = rgb(255,255,255)
+        document.querySelector("html").style.backgroundColor = rgb(0,0,0)
+        document.querySelector("html").style.color = rgb(255,255,255)
     }
     
     if(!(pointer == false)){
-        getElementById("all").style.cursor = pointer
+        document.querySelector("html").style.cursor = pointer
     }
     
     if(!touchAction){
-        getElementById("all").style.touchAction = "none"
+        document.querySelector("html").style.touchAction = "none"
     }
     
     if(divPen){
@@ -516,7 +516,7 @@ let obj = {
         if(clone){
             rem = rem.cloneNode(deep)
         }
-        getElementById("all").append(rem)
+        document.querySelector("html").append(rem)
     },
     img:{
         load(objName){
@@ -1041,10 +1041,10 @@ function createElement(_element){
     return(document.createElement(_element))
 }
 function appendChild(_element){
-    document.getElementById("all").appendChild(_element)
+    document.querySelector("html").appendChild(_element)
 }
 function append(_element){
-    document.getElementById("all").append(_element)
+    document.querySelector("html").append(_element)
 }
 let eventer = {
     listen(_name_, _func){
