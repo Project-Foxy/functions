@@ -333,11 +333,7 @@ let obj = {
     },
     clone(NEWobjname, objName){
         let rem = naf.obj[naf.objName.indexOf(objName)]
-        naf.objName.push(NEWobjname)
-        if(rem instanceof Element){
-            rem = rem.cloneNode(true)
-        }
-        naf.obj.push(rem)
+        obj.save(NEWobjname, rem)
     },
     rename(NEWobjname,objName){
         naf.objName[naf.indexOf(objName)] = NEWobjname
