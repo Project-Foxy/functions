@@ -334,6 +334,10 @@ let obj = {
     clone(NEWobjname, objName){
         let rem = naf.obj[naf.objName.indexOf(objName)]
         obj.save(NEWobjname, rem)
+
+    },
+    replace(){
+        console.error("help!!!")
     },
     rename(NEWobjname,objName){
         naf.objName[naf.indexOf(objName)] = NEWobjname
