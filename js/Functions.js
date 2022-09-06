@@ -332,8 +332,24 @@ let obj = {
         }
     },
     clone(NEWobjname, objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
-        obj.save(NEWobjname, rem)
+        if(naf.objName.includes(NEWobjname)){
+            
+            naf.obj[naf.objName.indexOf(NEWobjname)] = naf.obj[naf.objName.indexOf(objName)]
+
+        }
+        else{
+            let rem = naf.obj[naf.objName.indexOf(objName)]
+            
+            naf.objName.push(NEWobjname)
+            
+            if(rem instanceof Element){
+                rem = rem.cloneNode(true)
+            }
+            naf.obj.push(rem)
+        }
+        say(naf.obj)
+        say(naf.objName)
+    
     },
     rename(NEWobjname,objName){
         naf.objName[naf.indexOf(objName)] = NEWobjname
