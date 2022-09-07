@@ -332,12 +332,7 @@ let obj = {
         }
     },
     clone(NEWobjname, objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
-        obj.save(NEWobjname, rem)
-
-    },
-    replace(){
-        console.error("help!!!")
+        obj.save(NEWobjname, obj.getClone(objName))
     },
     rename(NEWobjname,objName){
         naf.objName[naf.indexOf(objName)] = NEWobjname
@@ -357,8 +352,7 @@ let obj = {
     getClone(objName,deep=true){
         let rem = naf.obj[naf.objName.indexOf(objName)]
         if(!(rem instanceof Element)){
-            console.error("You can only clone elements")
-            return
+            return(rem)
         }
         if(naf.objName.includes(objName)){
             return(rem.cloneNode(deep))
@@ -457,7 +451,7 @@ let obj = {
                 rem.id = this.id
                 rem.classList.add("obj")
                 repeat(obj.class.length,()=>{
-                    rem.classList.add(this.class.pop());
+                    rem.classList.add(obj.class.pop());
                 })
                 rs.backgroundColor = this.color
                 rs.position = this.position
