@@ -334,6 +334,11 @@ let obj = {
     clone(NEWobjname, objName){
         obj.save(NEWobjname, obj.getClone(objName))
     },
+    replace(obj, NEWobj){
+
+        obj.parentNode.replaceChild(NEWobj,obj)
+    
+    },
     rename(NEWobjname,objName){
         naf.objName[naf.indexOf(objName)] = NEWobjname
     },
@@ -436,36 +441,70 @@ let obj = {
         }
     },
     style:{
-        update(objName, autoCSS=true){
+        update(objName, ...list){
+
+            let all = false
+            if(list.length == 0){
+                all = true
+            }
+
             let rem = naf.obj[naf.objName.indexOf(objName)];
+
             if(rem instanceof Element){
-                //let rem = document.createElement("div")
+                let rem = document.createElement("div")
                 let SP
-                if(autoCSS){
+                if(all||list.includes("noAutoCSS")){
                     SP = smallestHW()/1000
                 }
                 else{
                     SP = 1
                 }
                 let rs = rem.style
-                rem.id = this.id
-                rem.classList.add("obj")
-                repeat(obj.class.length,()=>{
-                    rem.classList.add(obj.class.pop());
-                })
-                rs.backgroundColor = this.color
-                rs.position = this.position
-                rs.width = `${this.width*SP}px`
-                rs.height = `${this.height*SP}px`
-                rs.borderRadius = `${this.radius}`
-                rs.border = `${this.borderSize*SP}px solid ${this.borderColor}`
-                rem.innerText = this.text
-                rs.font = this.textType
-                rs.fontSize = `${this.textSize*SP}px`
+                if(all||list.includes("id")){
+                    rem.id = this.id
+                }
+                if(all||list.includes("class")){
+                    rem.classList.add("obj")
+                    repeat(obj.class.length,()=>{
+                        rem.classList.add(obj.class.pop());
+                    })
+                }
+                if(all||list.includes("color")){
+                    rs.backgroundColor = this.color
+                }
+                if(all||list.includes("position")){
+                    rs.position = this.position
+                }
+                if(all||list.includes("width")){
+                    rs.width = `${this.width*SP}px`
+                }
+                if(all||list.includes("height")){
+                    rs.height = `${this.height*SP}px`
+                }
+                if(all||list.includes("radius")){
+                    rs.borderRadius = `${this.radius}`
+                }
+                if(all||list.includes("border")){
+                    rs.border = `${this.borderSize*SP}px solid ${this.borderColor}`
+                }
+                if(all||list.includes("text")){
+                    rem.innerText = this.text
+                }
+                if(all||list.includes("textType")){
+                    rs.font = this.textType
+                }
+                if(all||list.includes("textSize")){
+                    rs.fontSize = `${this.textSize*SP}px`
+                }
+                if(all||list.includes("rotation")){
                 rs.transform = `rotate(${this.rotation}deg)`
+                }
+                if(all||list.includes("x")){
                 rs.left = `${this.x*SP - (this.width*SP / 2 + (this.borderSize*SP))}px`
+                }
+                if(all||list.includes("y")){
                 rs.top = `${this.y*SP - (this.height*SP / 2 + (this.borderSize*SP))}px`
-                
+                }
                 return
             }
             console.error("You can only style elements")
@@ -539,6 +578,10 @@ let obj = {
     }
 }
 
+function getElement(elementName){
+    return(document.querySelector(elementName))
+}
+
 function elementsOverlap(el1, el2) {
     const domRect1 = el1.getBoundingClientRect();
     const domRect2 = el2.getBoundingClientRect();
@@ -566,16 +609,20 @@ function say(..._text) {
 }
 */
 function forever(_func){
+    let counter = 0
     let update = () => {
-        _func()
+        counter++
+        _func(counter)
         window.requestAnimationFrame(update)
     }
     window.requestAnimationFrame(update)
 }
 
 function repeat(times, _func) {
+    let counter = 0
     for (let i = 0; i < times; i++) {
-        _func()
+        counter++
+        _func(counter)
     }
 }
 
