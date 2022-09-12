@@ -156,7 +156,7 @@ function smallestHW(){
 }
 
 function percent(a,b){
-    return(a/b*100)
+    return(a/100*b)
 }
 
 
