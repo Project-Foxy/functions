@@ -178,6 +178,10 @@ function goEnd(){}
 
 function sleep(){}
 
+function join(a, b){
+    return(String(a)+String(b))
+}
+
 /**
  * @default 
  * place all of your code in her
@@ -302,7 +306,7 @@ function setup({
         obj.style.width = 100
         obj.style.height = 100
         obj.style.color = invisible
-        obj.update("setup:pause_button_div")
+        obj.style.update("setup:pause_button_div")
         obj.append("setup:pause_button_div")
         obj.get("setup:pause_button_div").onclick = (()=>{
             say("pause")
@@ -312,54 +316,54 @@ function setup({
 }
 
 let obj = {
+    objName:[],
+    obj:[],
     say(objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
+        let rem = obj.obj[obj.objName.indexOf(objName)]
         say(rem)
     },
     open(objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
+        let rem = obj.obj[obj.objName.indexOf(objName)]
         open(rem)
     },
-    save(objName, obj){
-        if(naf.objName.includes(objName)){
-            let rem = naf.objName.indexOf(objName)
-            naf.objName[rem] = objName
-            naf.obj[rem] = obj
+    save(objName, _obj){
+        if(obj.objName.includes(objName)){
+            let rem = obj.objName.indexOf(objName)
+            obj.objName[rem] = objName
+            obj.obj[rem] = _obj
         }
         else{
-            naf.objName.push(objName)
-            naf.obj.push(obj)
+            obj.objName.push(objName)
+            obj.obj.push(_obj)
         }
     },
     clone(NEWobjname, objName){
         obj.save(NEWobjname, obj.getClone(objName))
     },
-    replace(obj, NEWobj){
-
-        obj.parentNode.replaceChild(NEWobj,obj)
-    
+    replace(_obj, NEWobj){
+        _obj.parentNode.replaceChild(NEWobj,_obj)
     },
     rename(NEWobjname,objName){
-        naf.objName[naf.indexOf(objName)] = NEWobjname
+        obj.objName[naf.indexOf(objName)] = NEWobjname
     },
     getWithNum(num){
-        if(naf.objName[num] == undefined){
+        if(obj.objName[num] == undefined){
             return(undefined)
         }
-        return(naf.obj[num])
+        return(obj.obj[num])
     },
     get(objName){
-        if(naf.objName.includes(objName)){
-            return(naf.obj[naf.objName.indexOf(objName)])
+        if(obj.objName.includes(objName)){
+            return(obj.obj[obj.objName.indexOf(objName)])
         }
         return(undefined)
     },
     getClone(objName,deep=true){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
+        let rem = obj.obj[obj.objName.indexOf(objName)]
         if(!(rem instanceof Element)){
             return(rem)
         }
-        if(naf.objName.includes(objName)){
+        if(obj.objName.includes(objName)){
             return(rem.cloneNode(deep))
         }
         return(undefined)
@@ -374,8 +378,8 @@ let obj = {
     },
     line:{
         append(objName){
-            let rem = naf.objName.indexOf(objName)
-            let rem_a = naf.obj[rem];
+            let rem = obj.objName.indexOf(objName)
+            let rem_a = obj.obj[rem];
             let rem_b = document.createElement("svg")
             let rem_c
             let rem_d
@@ -422,7 +426,7 @@ let obj = {
         lineCap: "round",
         update(objName){
             
-            let rem = naf.obj[naf.objName.indexOf(objName)]
+            let rem = obj.obj[obj.objName.indexOf(objName)]
             /**
              let rem = document.createElement("line")
              */
@@ -448,12 +452,12 @@ let obj = {
                 all = true
             }
 
-            let rem = naf.obj[naf.objName.indexOf(objName)];
+            let rem = obj.obj[obj.objName.indexOf(objName)];
 
             if(rem instanceof Element){
-                let rem = document.createElement("div")
+                //let rem = document.createElement("div")
                 let SP
-                if(all||list.includes("noAutoCSS")){
+                if(all||!(list.includes("noPS"))){
                     SP = smallestHW()/1000
                 }
                 else{
@@ -497,13 +501,13 @@ let obj = {
                     rs.fontSize = `${this.textSize*SP}px`
                 }
                 if(all||list.includes("rotation")){
-                rs.transform = `rotate(${this.rotation}deg)`
+                    rs.transform = `rotate(${this.rotation}deg)`
                 }
                 if(all||list.includes("x")){
-                rs.left = `${this.x*SP - (this.width*SP / 2 + (this.borderSize*SP))}px`
+                    rs.left = `${this.x*SP - (this.width*SP / 2 + (this.borderSize*SP))}px`
                 }
                 if(all||list.includes("y")){
-                rs.top = `${this.y*SP - (this.height*SP / 2 + (this.borderSize*SP))}px`
+                    rs.top = `${this.y*SP - (this.height*SP / 2 + (this.borderSize*SP))}px`
                 }
                 return
             }
@@ -549,7 +553,7 @@ let obj = {
         }
     },
     append(objName,clone=false,deep=true){
-        let rem = naf.obj[naf.objName.indexOf(objName)];
+        let rem = obj.obj[obj.objName.indexOf(objName)];
         if(clone){
             rem = rem.cloneNode(deep)
         }
@@ -557,23 +561,23 @@ let obj = {
     },
     img:{
         load(objName){
-            let rem = naf.objName.indexOf(objName)
-            naf.obj[rem] = LoadImage(naf.obj[rem])
+            let rem = obj.objName.indexOf(objName)
+            obj.obj[rem] = LoadImage(obj.obj[rem])
         }
     },
     snd:{
         load(objName){
-            let rem = naf.objName.indexOf(objName)
-            naf.obj[rem] = LoadSound(naf.obj[rem])
+            let rem = obj.objName.indexOf(objName)
+            obj.obj[rem] = LoadSound(obj.obj[rem])
         },
         play(objName, {loop = false} = {}){
             //let snd = document.createElement("audio")
-            let snd = naf.obj[naf.objName.indexOf(objName)]
+            let snd = obj.obj[obj.objName.indexOf(objName)]
             snd.loop = loop != null ? loop : false;
             snd.play()
         },
         pause(objName){
-            naf.obj[naf.objName.indexOf(objName)].pause()
+            obj.obj[obj.objName.indexOf(objName)].pause()
         },
     }
 }
@@ -619,10 +623,8 @@ function forever(_func){
 }
 
 function repeat(times, _func) {
-    let counter = 0
     for (let i = 0; i < times; i++) {
-        counter++
-        _func(counter)
+        _func(i)
     }
 }
 
@@ -927,6 +929,14 @@ function floor(_num, amount=0){
     }
 }
 
+function arrayToString(_array){
+    let rem = ""
+    repeat(_array.length,()=>{
+        rem = join(rem,_array.pop())
+    })
+    return(rem)
+}
+
 /** @default
  * Math
  * Gives you a the distance between the cordinates
@@ -1099,7 +1109,7 @@ let eventer = {
         }
         naf.eventList.push(code)
     },
-    send(_name, _var){
+    send(_name, _var=undefined){
         let i = 0
 
         repeat(naf.eventList.length,()=>{
@@ -1150,8 +1160,14 @@ String.prototype.remove = function(_text){
     return(this.valueOf().replace(_text,""))
 }
 
-function checkKeys(_key){
-    return(keys.includes(_key))
+function checkKeys(..._key){
+    let rem = false
+    repeat(_key.length,(i)=>{
+        if(keys.includes(_key[i])){
+            rem = true
+        }
+    })
+    return(rem)
 }
 
 let keys = []
