@@ -30,7 +30,7 @@ let naf = {
     makeDivId(_id){
         let div = document.createElement("div")
         div.id = _id
-        document.getElementById("all").appendChild(div)
+        document.querySelector("html").appendChild(div)
     },
     
     coseineY: 0,
@@ -156,7 +156,7 @@ function smallestHW(){
 }
 
 function percent(a,b){
-    return(a/b*100)
+    return(a/100*b)
 }
 
 
@@ -178,6 +178,10 @@ function goEnd(){}
 
 function sleep(){}
 
+function join(a, b){
+    return(String(a)+String(b))
+}
+
 /**
  * @default 
  * place all of your code in her
@@ -193,9 +197,12 @@ function setup({
     autoObj = true,
     show_canvas_border = false,
     pause_button = false,
+    say_code = false,
 } = {},_func = ()=>{}) {
     
-    
+    if(say_code){
+        say(_func)
+    }
 
     if(autoObj){
         //
@@ -211,20 +218,20 @@ function setup({
     }
 
     if(autoCSS == "purple") {
-        getElementById("all").style.backgroundColor = rgb(138,60,138)
-        getElementById("all").style.color = rgb(255,255,255)
+        document.querySelector("html").style.backgroundColor = rgb(138,60,138)
+        document.querySelector("html").style.color = rgb(255,255,255)
     }
     if(autoCSS == "darkMode") {
-        getElementById("all").style.backgroundColor = rgb(0,0,0)
-        getElementById("all").style.color = rgb(255,255,255)
+        document.querySelector("html").style.backgroundColor = rgb(0,0,0)
+        document.querySelector("html").style.color = rgb(255,255,255)
     }
     
     if(!(pointer == false)){
-        getElementById("all").style.cursor = pointer
+        document.querySelector("html").style.cursor = pointer
     }
     
     if(!touchAction){
-        getElementById("all").style.touchAction = "none"
+        document.querySelector("html").style.touchAction = "none"
     }
     
     if(divPen){
@@ -253,6 +260,10 @@ function setup({
     
     if(extra_funcs){
         func = naf.makeAll(func)
+    }
+
+    if(say_code){
+        say(func)
     }
     
     requestAnimationFrame(eval(func))
@@ -295,7 +306,7 @@ function setup({
         obj.style.width = 100
         obj.style.height = 100
         obj.style.color = invisible
-        obj.update("setup:pause_button_div")
+        obj.style.update("setup:pause_button_div")
         obj.append("setup:pause_button_div")
         obj.get("setup:pause_button_div").onclick = (()=>{
             say("pause")
@@ -305,51 +316,54 @@ function setup({
 }
 
 let obj = {
+    objName:[],
+    obj:[],
+    say(objName){
+        let rem = obj.obj[obj.objName.indexOf(objName)]
+        say(rem)
+    },
     open(objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
+        let rem = obj.obj[obj.objName.indexOf(objName)]
         open(rem)
     },
-    save(objName, obj){
-        if(naf.objName.includes(objName)){
-            let rem = naf.objName.indexOf(objName)
-            naf.objName[rem] = objName
-            naf.obj[rem] = obj
+    save(objName, _obj){
+        if(obj.objName.includes(objName)){
+            let rem = obj.objName.indexOf(objName)
+            obj.objName[rem] = objName
+            obj.obj[rem] = _obj
         }
         else{
-            naf.objName.push(objName)
-            naf.obj.push(obj)
+            obj.objName.push(objName)
+            obj.obj.push(_obj)
         }
     },
     clone(NEWobjname, objName){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
-        naf.objName.push(NEWobjname)
-        if(rem instanceof Element){
-            rem = rem.cloneNode(true)
-        }
-        naf.obj.push(rem)
+        obj.save(NEWobjname, obj.getClone(objName))
+    },
+    replace(_obj, NEWobj){
+        _obj.parentNode.replaceChild(NEWobj,_obj)
     },
     rename(NEWobjname,objName){
-        naf.objName[naf.indexOf(objName)] = NEWobjname
+        obj.objName[naf.indexOf(objName)] = NEWobjname
     },
     getWithNum(num){
-        if(naf.objName[num] == undefined){
+        if(obj.objName[num] == undefined){
             return(undefined)
         }
-        return(naf.obj[num])
+        return(obj.obj[num])
     },
     get(objName){
-        if(naf.objName.includes(objName)){
-            return(naf.obj[naf.objName.indexOf(objName)])
+        if(obj.objName.includes(objName)){
+            return(obj.obj[obj.objName.indexOf(objName)])
         }
         return(undefined)
     },
     getClone(objName,deep=true){
-        let rem = naf.obj[naf.objName.indexOf(objName)]
+        let rem = obj.obj[obj.objName.indexOf(objName)]
         if(!(rem instanceof Element)){
-            console.error("You can only clone elements")
-            return
+            return(rem)
         }
-        if(naf.objName.includes(objName)){
+        if(obj.objName.includes(objName)){
             return(rem.cloneNode(deep))
         }
         return(undefined)
@@ -364,8 +378,8 @@ let obj = {
     },
     line:{
         append(objName){
-            let rem = naf.objName.indexOf(objName)
-            let rem_a = naf.obj[rem];
+            let rem = obj.objName.indexOf(objName)
+            let rem_a = obj.obj[rem];
             let rem_b = document.createElement("svg")
             let rem_c
             let rem_d
@@ -412,7 +426,7 @@ let obj = {
         lineCap: "round",
         update(objName){
             
-            let rem = naf.obj[naf.objName.indexOf(objName)]
+            let rem = obj.obj[obj.objName.indexOf(objName)]
             /**
              let rem = document.createElement("line")
              */
@@ -431,36 +445,70 @@ let obj = {
         }
     },
     style:{
-        update(objName, autoCSS=true){
-            let rem = naf.obj[naf.objName.indexOf(objName)];
+        update(objName, ...list){
+
+            let all = false
+            if(list.length == 0){
+                all = true
+            }
+
+            let rem = obj.obj[obj.objName.indexOf(objName)];
+
             if(rem instanceof Element){
                 //let rem = document.createElement("div")
                 let SP
-                if(autoCSS){
+                if(all||!(list.includes("noPS"))){
                     SP = smallestHW()/1000
                 }
                 else{
                     SP = 1
                 }
                 let rs = rem.style
-                rem.id = this.id
-                rem.classList.add("obj")
-                repeat(obj.class.length,()=>{
-                    rem.classList.add(this.class.pop());
-                })
-                rs.backgroundColor = this.color
-                rs.position = this.position
-                rs.width = `${this.width*SP}px`
-                rs.height = `${this.height*SP}px`
-                rs.borderRadius = `${this.radius}`
-                rs.border = `${this.borderSize*SP}px solid ${this.borderColor}`
-                rem.innerText = this.text
-                rs.font = this.textType
-                rs.fontSize = `${this.textSize*SP}px`
-                rs.transform = `rotate(${this.rotation}deg)`
-                rs.left = `${this.x*SP - (this.width*SP / 2 + (this.borderSize*SP))}px`
-                rs.top = `${this.y*SP - (this.height*SP / 2 + (this.borderSize*SP))}px`
-                
+                if(all||list.includes("id")){
+                    rem.id = this.id
+                }
+                if(all||list.includes("class")){
+                    rem.classList.add("obj")
+                    repeat(obj.class.length,()=>{
+                        rem.classList.add(obj.class.pop());
+                    })
+                }
+                if(all||list.includes("color")){
+                    rs.backgroundColor = this.color
+                }
+                if(all||list.includes("position")){
+                    rs.position = this.position
+                }
+                if(all||list.includes("width")){
+                    rs.width = `${this.width*SP}px`
+                }
+                if(all||list.includes("height")){
+                    rs.height = `${this.height*SP}px`
+                }
+                if(all||list.includes("radius")){
+                    rs.borderRadius = `${this.radius}`
+                }
+                if(all||list.includes("border")){
+                    rs.border = `${this.borderSize*SP}px solid ${this.borderColor}`
+                }
+                if(all||list.includes("text")){
+                    rem.innerText = this.text
+                }
+                if(all||list.includes("textType")){
+                    rs.font = this.textType
+                }
+                if(all||list.includes("textSize")){
+                    rs.fontSize = `${this.textSize*SP}px`
+                }
+                if(all||list.includes("rotation")){
+                    rs.transform = `rotate(${this.rotation}deg)`
+                }
+                if(all||list.includes("x")){
+                    rs.left = `${this.x*SP - (this.width*SP / 2 + (this.borderSize*SP))}px`
+                }
+                if(all||list.includes("y")){
+                    rs.top = `${this.y*SP - (this.height*SP / 2 + (this.borderSize*SP))}px`
+                }
                 return
             }
             console.error("You can only style elements")
@@ -505,33 +553,37 @@ let obj = {
         }
     },
     append(objName,clone=false,deep=true){
-        let rem = naf.obj[naf.objName.indexOf(objName)];
+        let rem = obj.obj[obj.objName.indexOf(objName)];
         if(clone){
             rem = rem.cloneNode(deep)
         }
-        getElementById("all").append(rem)
+        document.querySelector("html").append(rem)
     },
     img:{
         load(objName){
-            let rem = naf.objName.indexOf(objName)
-            naf.obj[rem] = LoadImage(naf.obj[rem])
+            let rem = obj.objName.indexOf(objName)
+            obj.obj[rem] = LoadImage(obj.obj[rem])
         }
     },
     snd:{
         load(objName){
-            let rem = naf.objName.indexOf(objName)
-            naf.obj[rem] = LoadSound(naf.obj[rem])
+            let rem = obj.objName.indexOf(objName)
+            obj.obj[rem] = LoadSound(obj.obj[rem])
         },
         play(objName, {loop = false} = {}){
             //let snd = document.createElement("audio")
-            let snd = naf.obj[naf.objName.indexOf(objName)]
+            let snd = obj.obj[obj.objName.indexOf(objName)]
             snd.loop = loop != null ? loop : false;
             snd.play()
         },
         pause(objName){
-            naf.obj[naf.objName.indexOf(objName)].pause()
+            obj.obj[obj.objName.indexOf(objName)].pause()
         },
     }
+}
+
+function getElement(elementName){
+    return(document.querySelector(elementName))
 }
 
 function elementsOverlap(el1, el2) {
@@ -561,8 +613,10 @@ function say(..._text) {
 }
 */
 function forever(_func){
+    let counter = 0
     let update = () => {
-        _func()
+        counter++
+        _func(counter)
         window.requestAnimationFrame(update)
     }
     window.requestAnimationFrame(update)
@@ -570,7 +624,7 @@ function forever(_func){
 
 function repeat(times, _func) {
     for (let i = 0; i < times; i++) {
-        _func()
+        _func(i)
     }
 }
 
@@ -875,6 +929,14 @@ function floor(_num, amount=0){
     }
 }
 
+function arrayToString(_array){
+    let rem = ""
+    repeat(_array.length,()=>{
+        rem = join(rem,_array.pop())
+    })
+    return(rem)
+}
+
 /** @default
  * Math
  * Gives you a the distance between the cordinates
@@ -1034,10 +1096,10 @@ function createElement(_element){
     return(document.createElement(_element))
 }
 function appendChild(_element){
-    document.getElementById("all").appendChild(_element)
+    document.querySelector("html").appendChild(_element)
 }
 function append(_element){
-    document.getElementById("all").append(_element)
+    document.querySelector("html").append(_element)
 }
 let eventer = {
     listen(_name_, _func){
@@ -1047,7 +1109,7 @@ let eventer = {
         }
         naf.eventList.push(code)
     },
-    send(_name, _var){
+    send(_name, _var=undefined){
         let i = 0
 
         repeat(naf.eventList.length,()=>{
@@ -1098,8 +1160,14 @@ String.prototype.remove = function(_text){
     return(this.valueOf().replace(_text,""))
 }
 
-function checkKeys(_key){
-    return(keys.includes(_key))
+function checkKeys(..._key){
+    let rem = false
+    repeat(_key.length,(i)=>{
+        if(keys.includes(_key[i])){
+            rem = true
+        }
+    })
+    return(rem)
 }
 
 let keys = []
