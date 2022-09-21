@@ -2,6 +2,8 @@ setup({
     pause_button:true
 },()=>{
 
+
+
 obj.save("idle0","./res/character/idle/up/1.png")
 obj.img.load("idle0")
 obj.addClass("character")
