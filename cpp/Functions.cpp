@@ -1,16 +1,17 @@
 #include "Functions.h"
 
-void say(const char* message)
+void say(char* const message)
 {
     std::cout << message << std::endl;
 }
 
-void say(int message)
+
+void say(int const message)
 {
     std::cout << message << std::endl;
 }
 
-void say(double message)
+void say(double const message)
 {
     std::cout << message << std::endl;
 }
