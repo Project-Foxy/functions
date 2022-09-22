@@ -6,7 +6,11 @@
 <script src="./path/to/Functions.js"></script>
 ```
 
-- And don't forget to add `type=module` to your main Javascript script element. 
+- And don't forget to add `type=module` to your main Javascript script element, like this:
+  ```html
+     <script type=module src="./path/to/your/main.js"></script>
+  
+  ```
 
 ---
 
