@@ -1,3 +1,4 @@
+function say(..._text) {console.log(..._text)}
 
 let nothing = ""
 
@@ -597,13 +598,6 @@ function elementsOverlap(el1, el2) {
         domRect1.left > domRect2.right
         );
     }
-    
-/** @default
- * console.log("text")
- */
-function say(..._text) {
-    console.log(..._text)
-}
 
 /** @default
  *  repeat{
@@ -1146,6 +1140,20 @@ addEventListener("pointermove",(e)=>{
 
 })
 
+
+String.prototype.add = function(place, _text){
+
+    let rem = this.valueOf()
+    
+    rem = rem.slice(0, place) + _text + rem.slice(place, rem.length)
+
+    return(rem)
+
+}
+
+function string(_text){
+    return(JSON.stringify(_text))
+}
 
 Array.prototype.remove = function(_num){
     let array = this.valueOf()

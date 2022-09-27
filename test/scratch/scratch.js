@@ -1,30 +1,67 @@
 
 
-function goToPartInString(part,_text){
-    let counter
+function goToPartInString(part,start,_text){
+    let counter = start
     while(!(_text[counter] == part)){
-        
+        counter++
     }
+    return(counter)
 }
 
 function skipStartFunction (_func){
 
     let rem = String(_func)
     let counter = 0
-
-
+    counter = goToPartInString(")",counter,rem)
+    counter = goToPartInString("=",counter,rem)
+    counter = goToPartInString(">",counter,rem)
+    counter = goToPartInString("{",counter,rem)
+    
+    counter++
     return(counter)
 
 }
 
-function sprite(costumes, _func){
+function sprite(rem, _func){
 
 
-    say(_func)
+    let func = String(_func)
+    let counter = skipStartFunction(func)
+    
+
+    repeat(rem.Variable.length,(e)=>{
+        let rem_a = rem.Variable[e]
+        
+        DNU.Variable.name.push(rem_a[0])
+        DNU.Variable.obj.push(rem_a[1])
+
+        func = func.add(counter,`
+        let ${rem_a[0]} = ${rem_a[1]}
+        `)
+    })
+    
+    eval(func)()
 
 }
 
+let DNU = {
+    Costumes:{
+        name:[],
+        obj:[],
+    },
 
+    Sounds:{
+        name:[],
+        obj:[],
+    },
+
+    Variable:{
+        name:[],
+        obj:[],
+    },
+}
+
+/**Motion */
 
 function move(steps){
     say("move is work in progress")
@@ -34,15 +71,15 @@ function turn(degrees){
     say("turn is work in progress")
 }
 
-function goToPS(placeOrSprite){
+function go_to_PS(placeOrSprite){
     say("goTo is work in progress")
 }
 
-function goTo(x,y){
+function go_to(x,y){
     say("goTo is work in progress")
 }
 
-function glidePS(sec,placeOrSprite){
+function glide_PS(sec,placeOrSprite){
     say("glidePS is work in progress")
 }
 
@@ -50,35 +87,35 @@ function glide(sec,x,y){
     say("glide is work in progress")
 }
 
-function pointInDirection(degrees){
+function point_in_direction(degrees){
     say("pointInDirection is work in progress")
 }
 
-function pointTowards(placeOrSprite){
+function point_towards(placeOrSprite){
     say("pointTowards is work in progress")
 }
 
-function changeXBy(x){
+function change_x_by(x){
     say("changeXBy is work in progress")
 }
 
-function setXTo(x){
+function set_x_to(x){
     say("setXTo is work in progress")
 }
 
-function changeYBy(y){
+function change_y_by(y){
     say("changeYBy is work in progress")
 }
 
-function setYTo(y){
+function set_y_to(y){
     say("setYTo is work in progress")
 }
 
-function ifOnEdgeBounce(){
+function if_on_edge_bounce(){
     say("ifOnEdgeBounce is work in progress")
 }
 
-function setRotationStyle(type){
+function set_rotation_style(type){
     say("setRotationStyle is work in progress")
 }
 
@@ -86,4 +123,8 @@ let xPosition = 0
 let yPosition = 0
 let direction = 0
 
+/**Look */
 
+function switch_costumes_to(costumes){
+
+}
