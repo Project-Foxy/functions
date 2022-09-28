@@ -177,7 +177,7 @@ function goStart(){}
 function goBack(){}
 function goEnd(){}
 
-function sleep(){}
+function sleep(_sec){}
 
 function join(a, b){
     return(String(a)+String(b))
@@ -308,6 +308,7 @@ function setup({
         obj.style.height = 100
         obj.style.color = invisible
         obj.style.update("setup:pause_button_div")
+        obj.get("setup:pause_button_div").style.zIndex = 1000
         obj.append("setup:pause_button_div")
         obj.get("setup:pause_button_div").onclick = (()=>{
             say("pause")
@@ -622,6 +623,9 @@ function repeat(times, _func) {
     }
 }
 
+function replace(element, NEWelement){
+    element.parentNode.replaceChild(NEWelement,element)
+}
 
 
 let timer = 0
@@ -1137,8 +1141,16 @@ addEventListener("pointermove",(e)=>{
     let SP = smallestHW()/1000
     mouse_X = e.pageX/SP
     mouse_Y = e.pageY/SP
-
 })
+
+addEventListener("pointerdown",(e)=>{
+    mouse_page_X = e.pageX
+    mouse_page_Y = e.pageY
+    let SP = smallestHW()/1000
+    mouse_X = e.pageX/SP
+    mouse_Y = e.pageY/SP
+})
+
 
 
 String.prototype.add = function(place, _text){

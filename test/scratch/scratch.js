@@ -28,6 +28,15 @@ function sprite(rem, _func){
     let func = String(_func)
     let counter = skipStartFunction(func)
     
+    append(DNU.Character)
+    
+    forever(()=>{
+        DNU.Character.parentNode.replaceChild(DNU.Costumes.obj[DNU.Costumes.active],DNU.Character)
+    })
+
+    func = func.add(counter,`
+    
+    `)
 
     repeat(rem.Variable.length,(e)=>{
         let rem_a = rem.Variable[e]
@@ -40,6 +49,13 @@ function sprite(rem, _func){
         `)
     })
     
+    repeat(rem.Costumes.length,(e)=>{
+        let rem_a = rem.Costumes[e]
+        
+        DNU.Costumes.name.push(rem_a[0])
+        DNU.Costumes.obj.push(rem_a[1])
+    })
+
     eval(func)()
 
 }
@@ -48,6 +64,7 @@ let DNU = {
     Costumes:{
         name:[],
         obj:[],
+        active:0
     },
 
     Sounds:{
@@ -59,6 +76,7 @@ let DNU = {
         name:[],
         obj:[],
     },
+    Character: document.createElement("div")
 }
 
 /**Motion */
@@ -126,5 +144,10 @@ let direction = 0
 /**Look */
 
 function switch_costumes_to(costumes){
-
+    if(costumes instanceof Number){
+        DNU.Costumes.active[costumes]
+    }
+    else{
+        DNU.Costumes.active[DNU.Costumes.name.indexOf(costumes)]
+    }
 }
