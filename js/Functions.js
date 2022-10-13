@@ -1,3 +1,4 @@
+function say(..._text) {console.log(..._text)}
 
 let nothing = ""
 
@@ -176,7 +177,7 @@ function goStart(){}
 function goBack(){}
 function goEnd(){}
 
-function sleep(){}
+function sleep(_sec){}
 
 function join(a, b){
     return(String(a)+String(b))
@@ -307,6 +308,7 @@ function setup({
         obj.style.height = 100
         obj.style.color = invisible
         obj.style.update("setup:pause_button_div")
+        obj.get("setup:pause_button_div").style.zIndex = 1000
         obj.append("setup:pause_button_div")
         obj.get("setup:pause_button_div").onclick = (()=>{
             say("pause")
@@ -618,13 +620,6 @@ function elementsOverlap(el1, el2) {
         domRect1.left > domRect2.right
         );
     }
-    
-/** @default
- * console.log("text")
- */
-function say(..._text) {
-    console.log(..._text)
-}
 
 /** @default
  *  repeat{
@@ -649,6 +644,9 @@ function repeat(times, _func) {
     }
 }
 
+function replace(element, NEWelement){
+    element.parentNode.replaceChild(NEWelement,element)
+}
 
 
 let timer = 0
@@ -1164,9 +1162,31 @@ addEventListener("pointermove",(e)=>{
     let SP = smallestHW()/1000
     mouse_X = e.pageX/SP
     mouse_Y = e.pageY/SP
-
 })
 
+addEventListener("pointerdown",(e)=>{
+    mouse_page_X = e.pageX
+    mouse_page_Y = e.pageY
+    let SP = smallestHW()/1000
+    mouse_X = e.pageX/SP
+    mouse_Y = e.pageY/SP
+})
+
+
+
+String.prototype.add = function(place, _text){
+
+    let rem = this.valueOf()
+    
+    rem = rem.slice(0, place) + _text + rem.slice(place, rem.length)
+
+    return(rem)
+
+}
+
+function string(_text){
+    return(JSON.stringify(_text))
+}
 
 Array.prototype.remove = function(_num){
     let array = this.valueOf()
