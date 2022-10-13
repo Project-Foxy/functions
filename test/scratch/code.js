@@ -77,7 +77,7 @@ function switch_costume_to(costume){
     }
 }
 
-switch_costume_to(0)
+switch_costume_to(2)
 
 /////////////////////////////////
 
@@ -85,11 +85,12 @@ forever(()=>{
     x = mouse_page_X-50+"px"
     y = mouse_page_Y-50+"px"
     if(checkKeys("a")){
-        switch_costume_to("img")
+        switch_costume_to(0)
     }
     else{
         switch_costume_to("hi")
     }
+    
 })
 
 /////////////////////////////////
