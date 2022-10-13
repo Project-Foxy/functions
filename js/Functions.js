@@ -582,6 +582,27 @@ let obj = {
     }
 }
 
+function sprite(name,custumes=[],_func=()=>{}){
+    let rem = {
+        switch(customNameOrNumber){
+            if(customNameOrNumber instanceof Number){
+
+            }
+        },
+        nameList: [],
+        imgList: [],
+    }
+    repeat(custumes.length,(i)=>{
+        rem.nameList[i] = custumes[i][0]
+        rem.imgList[i] = LoadImage(custumes[i][1])
+    })
+
+    _func(hi)
+
+
+}
+
+
 function getElement(elementName){
     return(document.querySelector(elementName))
 }
