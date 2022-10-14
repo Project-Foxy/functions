@@ -1,37 +1,70 @@
 
+function say(..._text){
+    console.log(..._text);
+}
 
-function goToPartInString(part,start,_text){
-    let counter = start
-    while(!(_text[counter] == part)){
+let GDNU = {
+    greenfalg:document.createElement('div'),
+    goToPartInString(part,start,_text){
+        let counter = start
+        while(!(_text[counter] == part)){
+            counter++
+        }
+        return(counter)
+    },
+    skipStartFunction (_func){
+
+        let rem = String(_func)
+        let counter = 0
+        counter = LDNU.goToPartInString(")",counter,rem)
+        counter = LDNU.goToPartInString("=",counter,rem)
+        counter = LDNU.goToPartInString(">",counter,rem)
+        counter = LDNU.goToPartInString("{",counter,rem)
+        
         counter++
-    }
-    return(counter)
-}
-
-function skipStartFunction (_func){
-
-    let rem = String(_func)
-    let counter = 0
-    counter = goToPartInString(")",counter,rem)
-    counter = goToPartInString("=",counter,rem)
-    counter = goToPartInString(">",counter,rem)
-    counter = goToPartInString("{",counter,rem)
+        return(counter)
     
-    counter++
-    return(counter)
-
+    },
+    messagelist:[],
+    nextOfThis(_nextOf, _startNum, _text){
+        let rem = ""
+        let text = _text.split("")
+        if(text.some(r=> _nextOf.includes(r))){
+            let counter = _startNum
+            while (!( (_nextOf.includes(text[counter])) || (text.length < counter) )) {
+                say(counter)
+                rem = rem + text[counter]
+                counter++;
+            }
+            if(text.length<counter)console.error("The text is not containing the _nextOf");
+            else{
+                return counter
+            }
+        }
+        else{
+            console.error("The text is not containing the _nextOf");
+        }
+    }
 }
+
+GDNU.greenfalg.style.height = "100px";
+GDNU.greenfalg.style.width = "100px";
+GDNU.greenfalg.style.backgroundColor = "#00ff00";
+GDNU.greenfalg.style.position = "absolute";
+GDNU.greenfalg.style.left = "100px"
+GDNU.greenfalg.style.top = "100px"
+document.querySelector("html").append(GDNU.greenfalg)
 
 function sprite(rem, _func){
 
-
+    /*
     let func = String(_func)
-    let counter = skipStartFunction(func)
+    let counter = GDNU.skipStartFunction(func)
     
-    append(DNU.Character)
+    append(LDNU.Character)
     
     forever(()=>{
-        DNU.Character.parentNode.replaceChild(DNU.Costumes.obj[DNU.Costumes.active],DNU.Character)
+        LDNU.Character.parentNode.replaceChild(LDNU.Costumes.obj[LDNU.Costumes.active],LDNU.Character)
     })
 
     func = func.add(counter,`
@@ -41,8 +74,8 @@ function sprite(rem, _func){
     repeat(rem.Variable.length,(e)=>{
         let rem_a = rem.Variable[e]
         
-        DNU.Variable.name.push(rem_a[0])
-        DNU.Variable.obj.push(rem_a[1])
+        LDNU.Variable.name.push(rem_a[0])
+        LDNU.Variable.obj.push(rem_a[1])
 
         func = func.add(counter,`
         let ${rem_a[0]} = ${rem_a[1]}
@@ -52,102 +85,99 @@ function sprite(rem, _func){
     repeat(rem.Costumes.length,(e)=>{
         let rem_a = rem.Costumes[e]
         
-        DNU.Costumes.name.push(rem_a[0])
-        DNU.Costumes.obj.push(rem_a[1])
+        LDNU.Costumes.name.push(rem_a[0])
+        LDNU.Costumes.obj.push(rem_a[1])
     })
+    */
 
-    eval(func)()
+    _func()
 
 }
 
-let DNU = {
-    Costumes:{
-        name:[],
-        obj:[],
-        active:0
-    },
-
-    Sounds:{
-        name:[],
-        obj:[],
-    },
-
-    Variable:{
-        name:[],
-        obj:[],
-    },
-    Character: document.createElement("div")
+/**when_greenfalg_clicked */
+function when_greenfalg_clicked(_func){
+    GDNU.greenfalg.onclick = ()=>{
+        _func()
+    } 
 }
 
-/**Motion */
-
-function move(steps){
-    say("move is work in progress")
+/**when_key_pressed */
+function when_key_pressed(_key,_func){
+    addEventListener("keypress", function(e){
+        if(e.key == _key){
+            _func()
+        }
+    })
 }
 
-function turn(degrees){
-    say("turn is work in progress")
+/**when_I_receive */
+function when_I_receive(_message,_func){
+    GDNU.messagelist.push({_message,_func})
 }
 
-function go_to_PS(placeOrSprite){
-    say("goTo is work in progress")
-}
-
-function go_to(x,y){
-    say("goTo is work in progress")
-}
-
-function glide_PS(sec,placeOrSprite){
-    say("glidePS is work in progress")
-}
-
-function glide(sec,x,y){
-    say("glide is work in progress")
-}
-
-function point_in_direction(degrees){
-    say("pointInDirection is work in progress")
-}
-
-function point_towards(placeOrSprite){
-    say("pointTowards is work in progress")
-}
-
-function change_x_by(x){
-    say("changeXBy is work in progress")
-}
-
-function set_x_to(x){
-    say("setXTo is work in progress")
-}
-
-function change_y_by(y){
-    say("changeYBy is work in progress")
-}
-
-function set_y_to(y){
-    say("setYTo is work in progress")
-}
-
-function if_on_edge_bounce(){
-    say("ifOnEdgeBounce is work in progress")
-}
-
-function set_rotation_style(type){
-    say("setRotationStyle is work in progress")
-}
-
-let xPosition = 0
-let yPosition = 0
-let direction = 0
-
-/**Look */
-
-function switch_costumes_to(costumes){
-    if(costumes instanceof Number){
-        DNU.Costumes.active[costumes]
-    }
-    else{
-        DNU.Costumes.active[DNU.Costumes.name.indexOf(costumes)]
+/**brodcast */
+function brodcast(_message,_var=undefined){
+    for( var i=0; i<GDNU.messagelist.length ; i++ ){
+        if(GDNU.messagelist[i]._message == _message){
+            GDNU.messagelist[i]._func(_var)
+        }
     }
 }
+
+/**wait_seconds
+ * await wait_seconds(<seconds>)
+ */
+function wait_seconds(_seconds){
+    return new Promise( resolve => setTimeout( resolve, _seconds*1000 ))
+}
+
+/**work in progres */
+function repeat(times, _func) {
+    for(var i = 0; i < times; i++) {
+        _func(i)
+        
+    }
+}
+
+
+
+function wait_until(_boolean) {
+    return new Promise((resolve) => {
+        const update = ()=>{
+            if(_boolean)resolve()
+            requestAnimationFrame(update)
+        }
+        requestAnimationFrame(update)
+    })
+}
+
+Array.prototype.remove = function(_num){
+    let array = this.valueOf()
+    let index = array.indexOf(_num);
+    if (index > -1) {
+        array.splice(index, 1);
+    }
+    return(array)
+}
+
+function checkKeys(..._key){
+    let rem = false
+    repeat(_key.length,(i)=>{
+        if(keys.includes(_key[i])){
+            rem = true
+        }
+    })
+    return(rem)
+}
+
+let keys = []
+
+addEventListener("keydown", (e)=>{
+    if(keys.includes(e.key)) return
+    keys.push(e.key)
+})
+
+addEventListener("keyup",(e)=>{
+    keys.remove(e.key)
+})
+

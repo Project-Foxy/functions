@@ -1,12 +1,7 @@
-setup({
-    pause_button:true,
-},()=>{
-
-sleep(1)
 
 ////////////////////////////////
 
-let vari = {
+let input = {
     Costumes:[
         ["hi",document.createElement("div")],
         ["img",LoadImage("./../../../StioStudio.github.io/resurser/bilder/Epple.gif")]
@@ -22,7 +17,7 @@ let vari = {
 
 ////////////////////////////////
 
-let DNU = {
+let LDNU = {
     rem_element_character:undefined,
     Costumes:{
         name:[],
@@ -41,19 +36,19 @@ let DNU = {
     Character: document.createElement("div")
 }
 
-repeat(vari.Variable.length,(e)=>{
-    let rem_a = vari.Variable[e]
+repeat(input.Variable.length,(e)=>{
+    let rem_a = input.Variable[e]
     
-    DNU.Variable.name.push(rem_a[0])
-    DNU.Variable.obj.push(rem_a[1])
+    LDNU.Variable.name.push(rem_a[0])
+    LDNU.Variable.obj.push(rem_a[1])
 })
 
 
-repeat(vari.Costumes.length,(e)=>{
-    let rem_a = vari.Costumes[e]
+repeat(input.Costumes.length,(e)=>{
+    let rem_a = input.Costumes[e]
 
-    DNU.Costumes.name.push(rem_a[0])
-    DNU.Costumes.obj.push(rem_a[1])
+    LDNU.Costumes.name.push(rem_a[0])
+    LDNU.Costumes.obj.push(rem_a[1])
 })
 
 
@@ -61,19 +56,19 @@ let x = "500px"
 let y = "500px"
 let name = "Sprites"
 
-DNU.Character.id = name
-DNU.Character.style.position = "absolute"
-DNU.Character.style.height = "100px"
-DNU.Character.style.width = "100px"
-DNU.Character.style.backgroundColor = rgb(255,0,0)
-append(DNU.Character)
+LDNU.Character.id = name
+LDNU.Character.style.position = "absolute"
+LDNU.Character.style.height = "100px"
+LDNU.Character.style.width = "100px"
+LDNU.Character.style.backgroundColor = rgb(255,0,0)
+append(LDNU.Character)
 
 function switch_costume_to(costume){
     if(costume instanceof Number){
-        DNU.Character = DNU.Costumes.obj[costume]
+        LDNU.Character = LDNU.Costumes.obj[costume]
     }
     else{
-        DNU.Character = DNU.Costumes.obj[DNU.Costumes.name.indexOf(costume)]
+        LDNU.Character = LDNU.Costumes.obj[LDNU.Costumes.name.indexOf(costume)]
     }
 }
 
@@ -96,16 +91,14 @@ forever(()=>{
 /////////////////////////////////
 
 forever(()=>{
-    DNU.Character.style.left = x
-    DNU.Character.style.top = y
-    DNU.Character.id = name
-    DNU.Character.style.position = "absolute"
-    DNU.Character.style.height = "100px"
-    DNU.Character.style.width = "100px"
-    DNU.Character.style.backgroundColor = rgb(255,0,0)
+    LDNU.Character.style.left = x
+    LDNU.Character.style.top = y
+    LDNU.Character.id = name
+    LDNU.Character.style.position = "absolute"
+    LDNU.Character.style.height = "100px"
+    LDNU.Character.style.width = "100px"
+    LDNU.Character.style.backgroundColor = rgb(255,0,0)
 
-    replace(document.getElementById(name),DNU.Character)
+    replace(document.getElementById(name),LDNU.Character)
 })
 
-
-})
