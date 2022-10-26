@@ -12,18 +12,40 @@ let GDNU = {
         }
         return(counter)
     },
-    skipStartFunction (_func){
-
-        let rem = String(_func)
+    goThrue_A_and_B(a,b,_text){
+        let rem = String(_text)
         let counter = 0
-        counter = LDNU.goToPartInString(")",counter,rem)
-        counter = LDNU.goToPartInString("=",counter,rem)
-        counter = LDNU.goToPartInString(">",counter,rem)
-        counter = LDNU.goToPartInString("{",counter,rem)
-        
+
+        let goThrue = 0
+        counter = GDNU.nextOfThis([a,b],counter,rem)
+        if(rem[counter] == a){
+            goThrue++
+        }
+        else{
+            goThrue--
+        }
         counter++
+
+        while(goThrue != 0){
+            counter = GDNU.nextOfThis([a,b],counter,rem)
+            if(rem[counter] == a){
+                goThrue++
+            }
+            else{
+                goThrue--
+            }
+            counter++
+        }
         return(counter)
-    
+    },
+    skipStartFunction (_func){
+        let rem = String(_func)
+
+        let counter = GDNU.goThrue_A_and_B("(",")",rem)
+
+        counter = GDNU.nextOfThis("{",counter,rem)
+
+        return(counter+1)
     },
     messagelist:[],
     nextOfThis(_nextOf, _startNum, _text){
@@ -32,7 +54,6 @@ let GDNU = {
         if(text.some(r=> _nextOf.includes(r))){
             let counter = _startNum
             while (!( (_nextOf.includes(text[counter])) || (text.length < counter) )) {
-                say(counter)
                 rem = rem + text[counter]
                 counter++;
             }
@@ -44,7 +65,9 @@ let GDNU = {
         else{
             console.error("The text is not containing the _nextOf");
         }
-    }
+    },
+    enter:`
+    `,
 }
 
 GDNU.greenfalg.style.height = "100px";
@@ -55,7 +78,28 @@ GDNU.greenfalg.style.left = "100px"
 GDNU.greenfalg.style.top = "100px"
 document.querySelector("html").append(GDNU.greenfalg)
 
-function sprite(rem, _func){
+function scratch({},_func){
+
+    ////////////////////////////////
+    let counter = GDNU.skipStartFunction(_func)
+    ////////////////////////////////
+
+    let text = String(_func)
+    if(text.includes("wait_until")){
+        counter = text.indexOf("wait_until")
+        let start_num = counter
+        //say(counter+GDNU.enter+text[counter]+GDNU.enter+text)
+        let rem = ""
+        GDNU.goToPartInString("(",counter,text)
+        /**need more work */
+    }
+}
+
+function sprite({
+    Costumes = [["thing","thing"]],
+    Sounds = [["thing","thing"]],
+    Variables = [["thing","thing"]]
+} = {},_func){
 
     /*
     let func = String(_func)
