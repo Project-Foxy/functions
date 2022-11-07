@@ -27,7 +27,7 @@
 ---
 
 
-Happy coding with out features
+Happy coding with our features
 
 [@StioStudio](https://github.com/StioStudio) and [@nikeedev](https://github.com/nikeedev)
 
