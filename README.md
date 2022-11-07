@@ -1,6 +1,6 @@
 # Functions
 
-**JavaScript**
+## **JavaScript**
 - Just include `Functions.js` to your `<body>` element in your HTML file, like this: 
 ```html
 <script src="./path/to/Functions.js"></script>
@@ -14,14 +14,14 @@
 ---
 
 
-**C++**
 
--  Just include the `Functions.h` header, like this: 
+**C++ [DEPRECATED]**
+
+~~-Just include the `Functions.h` header, like this:~~
 ```c++
 #include "./path/to/cpp/Functions.h"
 ```
-- And thats really it, C++ will import the rest, but remember to compile Functions.cpp, the file that is included with the similar named header.
-
+~~- And thats really it, C++ will import the rest, but remember to compile Functions.cpp, the file that is included with the similar named header.~~
 
 
 ---
