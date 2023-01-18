@@ -54,9 +54,9 @@ repeat(input.Costumes.length,(e)=>{
 
 let x = "500px"
 let y = "500px"
-let name = "Sprites"
+let sprite_name = "Sprites"
 
-LDNU.Character.id = name
+LDNU.Character.id = sprite_name
 LDNU.Character.style.position = "absolute"
 LDNU.Character.style.height = "100px"
 LDNU.Character.style.width = "100px"
@@ -93,12 +93,12 @@ forever(()=>{
 forever(()=>{
     LDNU.Character.style.left = x
     LDNU.Character.style.top = y
-    LDNU.Character.id = name
+    LDNU.Character.id = sprite_name
     LDNU.Character.style.position = "absolute"
     LDNU.Character.style.height = "100px"
     LDNU.Character.style.width = "100px"
     LDNU.Character.style.backgroundColor = rgb(255,0,0)
 
-    replace(document.getElementById(name),LDNU.Character)
+    replace(document.getElementById(sprite_name),LDNU.Character)
 })
 
